@@ -2,11 +2,11 @@ import { Grid, GridItem, HStack, Image } from "@chakra-ui/react";
 import logoWhite from "../../assets/LogoWhite.svg";
 import logoBlack from "../../assets/LogoBlack.svg";
 import ColorMode from "../../components/ColorMode";
-import Pending from "../../components/Pending";
 import { useColorMode } from "../../components/ui/color-mode";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import type { data } from "../../components/Pending";
+import type { data } from "../../components/PendingInst";
+import PendingInst from "../../components/PendingInst";
 const AdminHome = () => {
   const colorMode = useColorMode().colorMode;
   const [pending, setPending] = useState<data[]>([]);
@@ -52,7 +52,11 @@ const AdminHome = () => {
       </GridItem>
       <GridItem area="main" padding={2}>
         <center>
-          <Pending data={pending} accept={accept} reject={reject}></Pending>
+          <PendingInst
+            data={pending}
+            accept={accept}
+            reject={reject}
+          ></PendingInst>
         </center>
       </GridItem>
     </Grid>

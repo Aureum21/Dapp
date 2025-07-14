@@ -37,18 +37,6 @@ const contractJsonPublicData = JSON.parse(
 
 const contractAbiPublicData = contractJsonPublicData.abi;
 
-// student contract
-
-const contractJsonStudentPath = path.resolve(
-  __dirname,
-  "../Files",
-  "Student.json"
-);
-const contractJsonStudent = JSON.parse(
-  fs.readFileSync(contractJsonStudentPath)
-);
-const contractAbiStudent = contractJsonStudent.abi;
-
 // Verify Stud contract
 const contractJsonVerifyStudPath = path.resolve(
   __dirname,
@@ -231,7 +219,7 @@ async function RegisterStudentPublic(contractAddress, value) {
 
   console.log("Result from Register:", receipt);
   return receipt;
-
+}
 async function RegisterStudentPrivateToPending(
   clientUrl,
   value,
@@ -268,6 +256,16 @@ async function RegisterStudentPrivateToPending(
     privateKey: besu.member2.accountPrivateKey,
     privateFrom: tessera.member2.publicKey,
     privateFor: [tessera.member1.publicKey],
+  };
+  const transactionHash = await web3quorum.priv.generateAndSendRawTransaction(
+    functionParams
+  );
+  const result = await web3quorum.priv.waitForTransactionReceipt(
+    transactionHash
+  );
+  return result;
+}
+
 const gentStudentInstitution = async (
   clientUrl,
   fromPrivateKey,
@@ -306,7 +304,6 @@ const gentStudentInstitution = async (
   console.log("decoded", decoded);
   return decoded;
 };
-
 const getStudentInformation = async (
   clientUrl,
   address,
@@ -335,18 +332,6 @@ const getStudentInformation = async (
   const transactionHash = await web3quorum.priv.generateAndSendRawTransaction(
     functionParams
   );
-  const result = await web3quorum.priv.waitForTransactionReceipt(
-    transactionHash
-  );
-  return result;
-}
-
-module.exports = {
-  RegisterStudentPrivate,
-  RegisterStudentPublic,
-  RegisterStudentPrivateToPending,
-  getStudContract,
-  getStudProfile,
   // console.log(`Transaction hash: ${transactionHash}`);
   const result = await web3quorum.priv.waitForTransactionReceipt(
     transactionHash
@@ -360,7 +345,6 @@ module.exports = {
   console.log("key", key);
   const studentInfo = await gentStudentInstitution(
     clientUrl,
-
     fromPrivateKey,
     fromPublicKey,
     toPublicKey,
@@ -368,8 +352,12 @@ module.exports = {
   );
   return studentInfo;
 };
+
 module.exports = {
   RegisterStudentPrivate,
   RegisterStudentPublic,
+  RegisterStudentPrivateToPending,
+  getStudContract,
+  getStudProfile,
   getStudentInformation,
 };

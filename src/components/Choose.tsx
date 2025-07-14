@@ -1,4 +1,4 @@
-import { Button, Card, Center, Image } from "@chakra-ui/react";
+import { Button, Card, Image } from "@chakra-ui/react";
 import { useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Web3Context } from "../Web3ContextProvider";
